@@ -1,33 +1,18 @@
-import { useState } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Chat from "./pages/Chat/Chat";
-import Home from "./pages/Home/Home";
-import "./style/global.css";
+import React from 'react';
 
+import { HashRouter, Route, Switch } from 'react-router-dom';
+import Login from './container/Login';
+import Chat from './container/Chat';
+
+// import { Link } from 'react-router-dom';
 function App() {
-  const [userName, setUserName] = useState();
-  const [roomName, setRoomName] = useState();
-
   return (
-    <div className="App">
-      <Router>
-        <Switch>
-          <Route path="/" exact>
-            <Home
-              userName={userName}
-              roomName={roomName}
-              setUserName={setUserName}
-              setRoomName={setRoomName}
-            />
-          </Route>
-          <Route
-            path="/chat"
-            exact
-            render={() => <Chat userName={userName} roomName={roomName} />}
-          ></Route>
-        </Switch>
-      </Router>
-    </div>
+    <HashRouter>
+      <Switch>
+        <Route exact path={['/', '/login']} component={Login} />
+        <Route exact path='/chat' component={Chat} />
+      </Switch>
+    </HashRouter>
   );
 }
 
