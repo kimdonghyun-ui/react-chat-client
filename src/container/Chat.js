@@ -50,8 +50,8 @@ const Chat = ({ roomName, userName }) => {
               xs=3
             </Grid>
             <Grid item xs={9}>
-              <Log />
-              <Input />
+              <Log currentSocket={currentSocket} />
+              <Input currentSocket={currentSocket} />
             </Grid>
           </Grid>
 

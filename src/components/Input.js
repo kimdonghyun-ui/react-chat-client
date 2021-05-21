@@ -1,29 +1,16 @@
-import React from "react";
+import React,{useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
-import CssBaseline from "@material-ui/core/CssBaseline";
+
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+
 import IconButton from "@material-ui/core/IconButton";
-import Paper from "@material-ui/core/Paper";
-import Fab from "@material-ui/core/Fab";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import Avatar from "@material-ui/core/Avatar";
-import MenuIcon from "@material-ui/icons/Menu";
-import AddIcon from "@material-ui/icons/Add";
-import SearchIcon from "@material-ui/icons/Search";
-import MoreIcon from "@material-ui/icons/MoreVert";
+
 
 import InputBase from "@material-ui/core/InputBase";
-import Divider from "@material-ui/core/Divider";
 
-import DirectionsIcon from "@material-ui/icons/Directions";
-import TextField from "@material-ui/core/TextField";
-import Box from "@material-ui/core/Box";
+
+
 
 import SendIcon from "@material-ui/icons/Send";
 const useStyles = makeStyles((theme) => ({
@@ -49,16 +36,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Input = () => {
+const Input = ({currentSocket}) => {
   const classes = useStyles();
+
+    const [chatMessage, setChatMessage] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    currentSocket.emit("onSend", {
+      userId: localStorage.getItem("userId"),
+      msg: chatMessage,
+      timeStamp: new Date().toLocaleTimeString(),
+    });
+    setChatMessage("");
+  };
+
+  const onChatMessageChange = (e) => {
+    setChatMessage(e.target.value);
+    //console.log(chatMessage)
+  };
+
+
+
 
   return (
     <AppBar position="fixed" className={classes.appBar}>
       <Toolbar className={classes.toolBar}>
+        <form className="ChatInput-form" onSubmit={handleSubmit}>
         <InputBase
           className={classes.input}
           placeholder="메시지 입력해주세요"
           inputProps={{ "aria-label": "search google maps" }}
+          onChange={onChatMessageChange}
+          value={chatMessage}
         />
         <IconButton
           type="submit"
@@ -66,7 +76,8 @@ const Input = () => {
           aria-label="search"
         >
           <SendIcon />
-        </IconButton>
+          </IconButton>
+          </form>
       </Toolbar>
     </AppBar>
   );

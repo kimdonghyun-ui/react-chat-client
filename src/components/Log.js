@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -95,8 +95,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Log = () => {
+const Log = ({currentSocket}) => {
   const classes = useStyles();
+
+  const [msgList, setMsgList] = useState([]);
+
+  useEffect(() => {
+    // messsgeItem : {msg: String, name: String, timeStamp: String}
+    currentSocket.on("onReceive", (messageItem) => {
+      setMsgList((msgList) => [...msgList, messageItem]);
+      
+    });
+    currentSocket.on("onConnect", (systemMessage) => {
+      setMsgList((msgList) => [...msgList, { msg: systemMessage }]);
+
+    });
+    currentSocket.on("onDisconnect", (systemMessage) => {
+      setMsgList((msgList) => [...msgList, { msg: systemMessage }]);
+
+    });
+    
+    return () => {
+      currentSocket.disconnect();
+    };
+  }, [currentSocket]);
+//localStorage.setItem("userId", userid);
+  // localStorage.setItem("msgList", msgList);
+  // console.log(msgList)
   return (
     <React.Fragment>
       <CssBaseline />
@@ -105,16 +130,19 @@ const Log = () => {
           Inbox
         </Typography>
         <List className={classes.list}>
-          {messages.map(({ id, primary, secondary, person }) => (
-            <React.Fragment key={id}>
+
+       {msgList.map((msg, idx) => (
+         <React.Fragment key={idx}>
               <ListItem button>
                 <ListItemAvatar>
-                  <Avatar alt="Profile Picture" src={person} />
+                  <Avatar alt="Profile Picture" src="/static/images/avatar/5.jpg" />
                 </ListItemAvatar>
-                <ListItemText primary={primary} secondary={secondary} />
+             <ListItemText primary={msg.userId} secondary={msg.msg} />
+             <div>{msg.timeStamp}</div>
               </ListItem>
-            </React.Fragment>
-          ))}
+        </React.Fragment>
+      ))}         
+
         </List>
       </Paper>
     </React.Fragment>
