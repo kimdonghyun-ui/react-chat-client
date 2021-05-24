@@ -119,9 +119,31 @@ const Log = ({currentSocket}) => {
       currentSocket.disconnect();
     };
   }, [currentSocket]);
-//localStorage.setItem("userId", userid);
-  // localStorage.setItem("msgList", msgList);
-  // console.log(msgList)
+
+ 
+
+  if (msgList.length === 0) {
+    var t = localStorage.getItem('msgList');
+    console.log(t);
+    console.log(JSON.parse(t));
+    //if(localStorage.getItem('msgList'))
+    //setMsgList(localStorage.getItem('msgList'));
+    if (localStorage.getItem('msgList') !== null) {
+      //setMsgList(localStorage.getItem('msgList'));
+      //console.log(localStorage.getItem('msgList'));
+      setMsgList(JSON.parse(t));
+      //({t});
+      //console.log(typeof setMsgList);
+    } 
+   
+  } else {
+    localStorage.setItem("msgList", JSON.stringify(msgList));
+  }
+
+
+  
+  
+
   return (
     <React.Fragment>
       <CssBaseline />
