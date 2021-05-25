@@ -9,11 +9,10 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Log from "../components/Log";
 import Input from "../components/Input";
-
-//로딩바--
-import Backdrop from "@material-ui/core/Backdrop";
-import CircularProgress from "@material-ui/core/CircularProgress";
-//로딩바--
+import Typography from '@material-ui/core/Typography';
+import Loading from "../components/Loading";
+import FriendList from "../components/Friend/FriendList";
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -46,10 +45,14 @@ const Chat = ({ roomName, userName }) => {
       {currentSocket ? (
         <Paper>
           <Grid container spacing={0}>
-            <Grid item xs={3}>
-              xs=3
+            <Grid item md={3} xs={12}>
+              <Typography variant="h4" gutterBottom>
+                친구 리스트
+              </Typography>
+              <Divider />
+              <FriendList />
             </Grid>
-            <Grid item xs={9}>
+            <Grid item md={9} xs={12}>
               <Log currentSocket={currentSocket} />
               <Input currentSocket={currentSocket} />
             </Grid>
@@ -59,9 +62,7 @@ const Chat = ({ roomName, userName }) => {
           <ChatInput userName={userName} socket={currentSocket}></ChatInput> */}
         </Paper>
       ) : (
-        <Backdrop className={classes.backdrop} open={true}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
+        <Loading />
       )}
     </Container>
   );

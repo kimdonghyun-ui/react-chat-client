@@ -4,10 +4,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 import Typography from "@material-ui/core/Typography";
-
+import Grid from '@material-ui/core/Grid';
 import Paper from "@material-ui/core/Paper";
-
-import List from "@material-ui/core/List";
+import Alert from '@material-ui/lab/Alert';
+import Box from "@material-ui/core/Box";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -101,22 +101,10 @@ const Log = ({currentSocket}) => {
   const [msgList, setMsgList] = useState([]);
 
   useEffect(() => {
-    // messsgeItem : {msg: String, name: String, timeStamp: String}
-    currentSocket.on("onReceive", (messageItem) => {
-      setMsgList((msgList) => [...msgList, messageItem]);
-      
-    });
-    currentSocket.on("onConnect", (systemMessage) => {
-      setMsgList((msgList) => [...msgList, { msg: systemMessage }]);
-
-    });
-    currentSocket.on("onDisconnect", (systemMessage) => {
-      setMsgList((msgList) => [...msgList, { msg: systemMessage }]);
-
-    });
+  
     
     return () => {
-      currentSocket.disconnect();
+     // currentSocket.disconnect();
     };
   }, [currentSocket]);
 
@@ -151,21 +139,30 @@ const Log = ({currentSocket}) => {
         <Typography className={classes.text} variant="h5" gutterBottom>
           Inbox
         </Typography>
-        <List className={classes.list}>
-
-       {msgList.map((msg, idx) => (
-         <React.Fragment key={idx}>
-              <ListItem button>
-                <ListItemAvatar>
-                  <Avatar alt="Profile Picture" src="/static/images/avatar/5.jpg" />
-                </ListItemAvatar>
-             <ListItemText primary={msg.userId} secondary={msg.msg} />
-             <div>{msg.timeStamp}</div>
-              </ListItem>
-        </React.Fragment>
-      ))}         
-
-        </List>
+        <Box className={classes.list} m={2}>
+          {msgList.map((msg, idx) => (
+            <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="flex-start"
+              spacing={1}
+              key={idx}
+              style={{ marginBottom:'40px'}}
+            >
+              <Grid item xs>
+                <Avatar alt="Remy Sharp" src='https://material-app.bootlab.io/static/img/avatars/avatar-1.jpg' />
+              </Grid>
+              <Grid item xs>
+                <Alert icon={false} severity="success">
+                  <strong>{msg.userId}</strong>
+                  {msg.msg}
+                </Alert>
+                {msg.timeStamp}
+              </Grid>
+            </Grid>
+          ))}
+        </Box>
       </Paper>
     </React.Fragment>
   );
