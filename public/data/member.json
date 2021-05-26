@@ -1,0 +1,34 @@
+{
+    "data" : [
+        {
+            "id":"dongdong",
+            "number":"1",
+            "img": "https://material-app.bootlab.io/static/img/avatars/avatar-1.jpg",
+            "friend":["1","2","3","4","5"]
+        },
+        {
+            "id":"fogtime",
+            "number":"2",
+            "img": "https://material-app.bootlab.io/static/img/avatars/avatar-2.jpg",
+            "friend":["1","2","3","4"]
+        },
+        {
+            "id":"foglove",
+            "number":"3",
+            "img": "https://material-app.bootlab.io/static/img/avatars/avatar-3.jpg",
+            "friend":["1","2","3","4"]
+        },
+        {
+            "id":"kingysw",
+            "number":"4",
+            "img": "https://material-app.bootlab.io/static/img/avatars/avatar-4.jpg",
+            "friend":["1","2","3","4"]
+        },
+        {
+            "id":"jsy6400",
+            "number":"5",
+            "img": "https://material-app.bootlab.io/static/img/avatars/avatar-5.jpg",
+            "friend":["1","2","3","4"]
+        }
+    ]
+}

@@ -53,7 +53,7 @@ const Input = ({currentSocket}) => {
 
   const onChatMessageChange = (e) => {
     setChatMessage(e.target.value);
-    //console.log(chatMessage)
+    console.log(chatMessage)
   };
 
 

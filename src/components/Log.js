@@ -101,7 +101,18 @@ const Log = ({currentSocket}) => {
   const [msgList, setMsgList] = useState([]);
 
   useEffect(() => {
-  
+      currentSocket.on("onReceive", (messageItem) => {
+      setMsgList((msgList) => [...msgList, messageItem]);
+      
+    });
+    currentSocket.on("onConnect", (systemMessage) => {
+      setMsgList((msgList) => [...msgList, { msg: systemMessage }]);
+
+    });
+    currentSocket.on("onDisconnect", (systemMessage) => {
+      setMsgList((msgList) => [...msgList, { msg: systemMessage }]);
+
+    });
     
     return () => {
      // currentSocket.disconnect();
